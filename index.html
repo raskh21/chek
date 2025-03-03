@@ -6,6 +6,9 @@
     <title>دستیارهوشمند خزانه داری RASEKH.AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
     <style>
         * {
             font-family: 'Vazirmatn', sans-serif;
@@ -272,12 +275,12 @@
 
                 <div class="form-group">
                     <label>تاریخ روز :</label>
-                    <input type="text" id="current-date" class="datepicker">
+                    <input type="text"  class="datepicker">
                 </div>
 
                 <div class="form-group">
                     <label>تاریخ چک:</label>
-                    <input type="text" id="check-date" class="datepicker">
+                    <input type="text"  class="datepicker">
                 </div>
 
                 <div class="form-group">
@@ -379,12 +382,12 @@
 
             <div class="form-group">
                 <label>تاریخ روز :</label>
-                <input type="text" id="payment-current-date" class="datepicker">
+                <input type="text"  class="datepicker">
             </div>
 
             <div class="form-group">
                 <label>تاریخ چک:</label>
-                <input type="text" id="payment-check-date" class="datepicker">
+                <input type="text"  class="datepicker">
             </div>
 
             <div class="form-group">
@@ -462,7 +465,7 @@
 
             <div class="form-group">
                 <label>تاریخ روز :</label>
-                <input type="text" id="cash-current-date" class="datepicker">
+                <input type="text"  class="datepicker">
             </div>
 
             <div class="form-group">
@@ -552,8 +555,6 @@
         </div>
     </main>
 
-    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
-    <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
     <script>
         let accounts = JSON.parse(localStorage.getItem('accounts')) || [];
         let documents = JSON.parse(localStorage.getItem('documents')) || [];
@@ -1184,23 +1185,24 @@
             }
         }
 
-        $(document).ready(function() {
-            $('.datepicker').persianDatepicker({
+          // تنظیم تاریخ روز به صورت خودکار
+
+    $(document).ready(function () {
+        $(".datepicker").each(function () {  
+            var today = new persianDate().format('YYYY/MM/DD'); // دریافت تاریخ امروز
+
+            $(this).val(today);  // مقداردهی خودکار فیلد
+
+            $(this).persianDatepicker({  // فعال‌سازی تقویم جلالی
                 format: 'YYYY/MM/DD',
-                observer: true,
-                initialValue: false,
-                altField: '.datepicker-alt'
+                autoClose: true,
+                initialValue: true
             });
-
-            // تنظیم تاریخ روز به صورت خودکار
-            const today = new Date();
-            const persianDate = new persianDate(today).format('YYYY/MM/DD');
-            document.querySelectorAll('.datepicker').forEach(input => {
-                input.value = persianDate;
-            });
-
-            checkTrialPeriod();
         });
+
+        checkTrialPeriod(); // این تابع باید تعریف شده باشد، در غیر این صورت حذفش کن
+    });
+
     </script>
 </body>
 </html>
