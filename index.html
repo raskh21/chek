@@ -275,12 +275,12 @@
 
                 <div class="form-group">
                     <label>تاریخ روز :</label>
-                    <input type="text"  class="datepicker">
+                    <input type="text" id="current-date" class="datepicker">
                 </div>
 
                 <div class="form-group">
                     <label>تاریخ چک:</label>
-                    <input type="text"  class="datepicker">
+                    <input type="text" id="check-date" class="datepicker">
                 </div>
 
                 <div class="form-group">
@@ -303,10 +303,6 @@
                     <select id="counterparty" onchange="handleAccountSelection(this)">
                         <option value="">انتخاب کنید</option>
                     </select>
-                    <div class="quick-add-account">
-                        <input type="text" id="new-account-name" class="quick-add-input" placeholder="نام حساب جدید">
-                        <button class="button" onclick="addQuickAccount()">+ افزودن</button>
-                    </div>
                 </div>
 
                 <div class="form-group">
@@ -325,10 +321,6 @@
                     <select id="receiver" onchange="handleAccountSelection(this)">
                         <option value="">انتخاب کنید</option>
                     </select>
-                    <div class="quick-add-account">
-                        <input type="text" id="new-receiver-name" class="quick-add-input" placeholder="نام گیرنده جدید">
-                        <button class="button" onclick="addQuickReceiver()">+ افزودن</button>
-                    </div>
                 </div>
 
                 <div class="form-group">
@@ -338,6 +330,7 @@
             </div>
 
             <div class="toggle-buttons">
+			    <a href="#accounts" class="menu-item" onclick="showMenuSection('accounts')">حساب‌ها</a>
                 <button class="button save-btn" onclick="saveDocument()">ذخیره</button>
                 <button class="button close-btn" onclick="voidDocument()">ابطال</button>
                 <button class="button" onclick="showDocumentsTable()">نمایش جدول</button>
@@ -345,34 +338,36 @@
             </div>
         </div>
 
-        <!-- جدول اسناد دریافتنی -->
-        <div id="documents-table" class="documents-section">
-            <input type="text" class="search-box" placeholder="جستجوی پیشرفته..." onkeyup="searchDocuments(this.value)">
-            <div class="amount-summary" id="total-amount">جمع مبالغ: 0 ریال</div>
+   <!-- جدول اسناد دریافتنی -->
+<div id="documents-table" class="documents-section">
+    <input type="text" class="search-box" placeholder="جستجوی پیشرفته..." onkeyup="searchDocuments(this.value)">
+    <div class="amount-summary" id="total-amount">جمع مبالغ: 0 ریال</div>
 
-            <table class="accounts-table">
-                <thead>
-                    <tr>
-                        <th>ردیف</th>
-                        <th>تاریخ چک</th>
-                        <th>طرف حساب</th>
-                        <th>مبلغ</th>
-                        <th>وضعیت</th>
-                        <th>گیرنده</th>
-                        <th>عملیات</th>
-                    </tr>
-                </thead>
-                <tbody id="documents-table-body">
-                    <!-- داده‌ها به صورت پویا اضافه می‌شوند -->
-                </tbody>
-            </table>
+    <table class="accounts-table">
+        <thead>
+            <tr>
+                <th>ردیف</th>
+                <th>تاریخ چک</th>
+                <th>شماره چک</th> <!-- ستون جدید -->
+                <th>نام بانک</th> <!-- ستون جدید -->
+                <th>طرف حساب</th>
+                <th>مبلغ</th>
+                <th>وضعیت</th>
+                <th>گیرنده</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="documents-table-body">
+            <!-- داده‌ها به صورت پویا اضافه می‌شوند -->
+        </tbody>
+    </table>
 
-            <div class="toggle-buttons">
-                <button class="button" onclick="showDocumentsForm()">ثبت سند جدید</button>
-                <button class="button close-btn" onclick="hideAllSections()">بستن</button>
-            </div>
-        </div>
-
+    <div class="toggle-buttons">
+        <button class="button" onclick="showDocumentsForm()">ثبت سند جدید</button>
+        <button class="button close-btn" onclick="hideAllSections()">بستن</button>
+    </div>
+</div>
+   
         <!-- بخش اسناد پرداختنی -->
         <div id="payment-documents" class="payment-documents-section">
             <div class="form-group">
@@ -382,12 +377,12 @@
 
             <div class="form-group">
                 <label>تاریخ روز :</label>
-                <input type="text"  class="datepicker">
+                <input type="text" id="payment-current-date" class="datepicker">
             </div>
 
             <div class="form-group">
                 <label>تاریخ چک:</label>
-                <input type="text"  class="datepicker">
+                <input type="text" id="payment-check-date" class="datepicker">
             </div>
 
             <div class="form-group">
@@ -400,10 +395,7 @@
                 <select id="payment-counterparty" onchange="handleAccountSelection(this)">
                     <option value="">انتخاب کنید</option>
                 </select>
-                <div class="quick-add-account">
-                    <input type="text" id="payment-new-account-name" class="quick-add-input" placeholder="نام حساب جدید">
-                    <button class="button" onclick="addQuickAccount()">+ افزودن</button>
-                </div>
+                
             </div>
 
             <div class="form-group">
@@ -428,93 +420,91 @@
             </div>
         </div>
 
-        <!-- جدول اسناد پرداختنی -->
-        <div id="payment-documents-table" class="payment-documents-section">
-            <input type="text" class="search-box" placeholder="جستجوی پیشرفته..." onkeyup="searchPaymentDocuments(this.value)">
-            <div class="amount-summary" id="payment-total-amount">جمع مبالغ: 0 ریال</div>
+<!-- جدول اسناد پرداختنی -->
+<div id="payment-documents-table" class="payment-documents-section">
+    <input type="text" class="search-box" placeholder="جستجوی پیشرفته..." onkeyup="searchPaymentDocuments(this.value)">
+    <div class="amount-summary" id="payment-total-amount">جمع مبالغ: 0 ریال</div>
 
-            <table class="accounts-table">
-                <thead>
-                    <tr>
-                        <th>ردیف</th>
-                        <th>تاریخ چک</th>
-                        <th>طرف حساب</th>
-                        <th>مبلغ</th>
-                        <th>وضعیت</th>
-                        <th>توضیحات</th>
-                        <th>عملیات</th>
-                    </tr>
-                </thead>
-                <tbody id="payment-documents-table-body">
-                    <!-- داده‌ها به صورت پویا اضافه می‌شوند -->
-                </tbody>
-            </table>
+    <table class="accounts-table">
+        <thead>
+            <tr>
+                <th>ردیف</th>
+                <th>تاریخ چک</th>
+                <th>شماره چک</th> <!-- ستون جدید -->
+                <th>نام بانک</th> <!-- ستون جدید -->
+                <th>طرف حساب</th>
+                <th>مبلغ</th>
+                <th>وضعیت</th>
+                <th>توضیحات</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody id="payment-documents-table-body">
+            <!-- داده‌ها به صورت پویا اضافه می‌شوند -->
+        </tbody>
+    </table>
 
-            <div class="toggle-buttons">
-                <button class="button" onclick="showPaymentDocumentsForm()">ثبت سند جدید</button>
-                <button class="button close-btn" onclick="hideAllSections()">بستن</button>
-            </div>
-        </div>
+    <div class="toggle-buttons">
+        <button class="button" onclick="showPaymentDocumentsForm()">ثبت سند جدید</button>
+        <button class="button close-btn" onclick="hideAllSections()">بستن</button>
+    </div>
+</div>
 
-        <!-- بخش صندوق -->
-        <div id="cash" class="cash-section">
-            <div class="form-group">
-                <label>ردیف:</label>
-                <input type="text" id="cash-row" value="1" readonly>
-            </div>
+<!-- بخش صندوق -->
+<div id="cash" class="cash-section">
+    <div class="form-group">
+        <label>ردیف:</label>
+        <input type="text" id="cash-row" value="1" readonly>
+    </div>
 
-            <div class="form-group">
-                <label>تاریخ روز :</label>
-                <input type="text"  class="datepicker">
-            </div>
+    <div class="form-group">
+        <label>تاریخ روز :</label>
+        <input type="text" id="cash-current-date" class="datepicker">
+    </div>
 
-            <div class="form-group">
-                <label>مبلغ (ریال):</label>
-                <input type="number" id="cash-amount">
-            </div>
+    <div class="form-group">
+        <label>مبلغ (ریال):</label>
+        <input type="number" id="cash-amount">
+    </div>
 
-            <div class="form-group">
-                <label>طرف حساب:</label>
-                <select id="cash-counterparty" onchange="handleAccountSelection(this)">
-                    <option value="">انتخاب کنید</option>
-                </select>
-                <div class="quick-add-account">
-                    <input type="text" id="cash-new-account-name" class="quick-add-input" placeholder="نام حساب جدید">
-                    <button class="button" onclick="addQuickAccount()">+ افزودن</button>
-                </div>
-            </div>
+    <div class="form-group">
+        <label>طرف حساب:</label>
+        <select id="cash-counterparty" onchange="handleAccountSelection(this)">
+            <option value="">انتخاب کنید</option>
+        </select>
 
-            <div class="form-group">
-                <label>وضعیت:</label>
-                <select id="cash-status">
-                    <option value="دریافت">دریافت</option>
-                    <option value="پرداخت">پرداخت</option>
-                </select>
-            </div>
+    <div class="form-group">
+        <label>وضعیت:</label>
+        <select id="cash-status">
+            <option value="دریافت">دریافت</option>
+            <option value="پرداخت">پرداخت</option>
+        </select>
+    </div>
 
-            <div class="form-group">
-                <label>توضیحات:</label>
-                <textarea id="cash-description" rows="2"></textarea>
-            </div>
+    <div class="form-group">
+        <label>توضیحات:</label>
+        <textarea id="cash-description" rows="2"></textarea>
+    </div>
 
-            <div class="toggle-buttons">
-                <button class="button save-btn" onclick="saveCashDocument()">ذخیره</button>
-                <button class="button close-btn" onclick="voidCashDocument()">ابطال</button>
-                <button class="button" onclick="showCashDocumentsTable()">نمایش جدول</button>
-                <button class="button close-btn" onclick="hideAllSections()">بستن</button>
-            </div>
+    <div class="toggle-buttons">
+        <button class="button save-btn" onclick="saveCashDocument()">ذخیره</button>
+        <button class="button close-btn" onclick="voidCashDocument()">ابطال</button>
+        <button class="button" onclick="showCashDocumentsTable()">نمایش جدول</button>
+        <button class="button close-btn" onclick="hideAllSections()">بستن</button>
+    </div>
 
-            <div class="initial-balance">
-                <label>موجودی اول دوره:</label>
-                <input type="number" id="initial-balance" placeholder="موجودی اول دوره">
-            </div>
-        </div>
+    <div class="initial-balance">
+        <label>موجودی اول دوره:</label>
+        <input type="number" id="initial-balance" placeholder="موجودی اول دوره">
+    </div>
 
+    <div class="amount-summary" id="cash-balance">موجودی صندوق: 0 ریال</div>
+</div>
+</div>
         <!-- جدول صندوق -->
         <div id="cash-documents-table" class="cash-section">
             <input type="text" class="search-box" placeholder="جستجوی پیشرفته..." onkeyup="searchCashDocuments(this.value)">
             <div class="amount-summary" id="cash-total-amount">جمع مبالغ: 0 ریال</div>
-
             <table class="accounts-table">
                 <thead>
                     <tr>
@@ -537,7 +527,7 @@
                 <button class="button close-btn" onclick="hideAllSections()">بستن</button>
             </div>
         </div>
-
+    </div>
         <!-- بخش پشتیبانی واتساپ -->
         <div id="support" class="profile-section">
             <p>برای دریافت پشتیبانی، با ما از طریق واتساپ تماس بگیرید:</p>
@@ -733,7 +723,7 @@
         function saveDocument() {
             const doc = {
                 id: Date.now().toString(),
-                row: document.getElementById('row-number').value,
+                row: parseInt(document.getElementById('row-number').value),
                 date: document.getElementById('current-date').value,
                 checkDate: document.getElementById('check-date').value,
                 bank: document.getElementById('bank-name').value,
@@ -760,35 +750,38 @@
             alert('اطلاعات ذخیره شد!');
         }
 
-        function updateDocumentsTable() {
-            const tbody = document.getElementById('documents-table-body');
-            tbody.innerHTML = '';
 
-            let total = 0;
+function updateDocumentsTable() {
+    const tbody = document.getElementById('documents-table-body');
+    tbody.innerHTML = '';
 
-            documents.forEach((doc, index) => {
-                total += doc.isVoided ? 0 : parseInt(doc.amount) || 0;
+    let total = 0;
 
-                tbody.innerHTML += `
-                    <tr class="${doc.isVoided ? 'voided-row' : ''}">
-                        <td>${doc.row}</td>
-                        <td>${doc.checkDate}</td>
-                        <td>${getAccountName(doc.counterparty)}</td>
-                        <td>${doc.isVoided ? '<s>' : ''}${formatAmount(doc.amount)}${doc.isVoided ? '</s>' : ''}</td>
-                        <td>${doc.status}</td>
-                        <td>${getAccountName(doc.receiver)}</td>
-                        <td>
-                            <button class="button" onclick="editDocument('${doc.id}')">ویرایش</button>
-                            <button class="button close-btn" onclick="deleteDocument('${doc.id}')">حذف</button>
-                        </td>
-                    </tr>
-                `;
-            });
+    documents.forEach((doc, index) => {
+        total += doc.isVoided ? 0 : parseInt(doc.amount) || 0;
 
-            document.getElementById('total-amount').textContent =
-                `جمع مبالغ: ${formatAmount(total)} ریال`;
-        }
+        tbody.innerHTML += `
+            <tr class="${doc.isVoided ? 'voided-row' : ''}">
+                <td>${doc.row}</td>
+                <td>${doc.checkDate}</td>
+                <td>${doc.accountNumber}</td> <!-- ستون جدید -->
+                <td>${doc.bank}</td> <!-- ستون جدید -->
+                <td>${getAccountName(doc.counterparty)}</td>
+                <td>${doc.isVoided ? '<s>' : ''}${formatAmount(doc.amount)}${doc.isVoided ? '</s>' : ''}</td>
+                <td>${doc.status}</td>
+                <td>${getAccountName(doc.receiver)}</td>
+                <td>
+                    <button class="button" onclick="editDocument('${doc.id}')">ویرایش</button>
+                    <button class="button close-btn" onclick="deleteDocument('${doc.id}')">حذف</button>
+                </td>
+            </tr>
+        `;
+    });
 
+    document.getElementById('total-amount').textContent =
+        `جمع مبالغ: ${formatAmount(total)} ریال`;
+}
+ 
         function formatAmount(amount) {
             return new Intl.NumberFormat('fa-IR').format(amount);
         }
@@ -844,7 +837,7 @@
         }
 
         function clearForm() {
-            document.getElementById('row-number').value = '';
+            document.getElementById('row-number').value = parseInt(document.getElementById('row-number').value) + 1;
             document.getElementById('current-date').value = '';
             document.getElementById('check-date').value = '';
             document.getElementById('bank-name').value = '';
@@ -883,10 +876,10 @@
         function savePaymentDocument() {
             const doc = {
                 id: Date.now().toString(),
-                row: document.getElementById('payment-row').value,
+                row: parseInt(document.getElementById('payment-row').value),
                 date: document.getElementById('payment-current-date').value,
                 checkDate: document.getElementById('payment-check-date').value,
-                amount: document.getElementById('payment-amount').value,
+				amount: document.getElementById('payment-amount').value,
                 counterparty: document.getElementById('payment-counterparty').value,
                 status: document.getElementById('payment-status').value,
                 description: document.getElementById('payment-description').value,
@@ -907,34 +900,36 @@
             alert('اطلاعات ذخیره شد!');
         }
 
-        function updatePaymentDocumentsTable() {
-            const tbody = document.getElementById('payment-documents-table-body');
-            tbody.innerHTML = '';
+function updatePaymentDocumentsTable() {
+    const tbody = document.getElementById('payment-documents-table-body');
+    tbody.innerHTML = '';
 
-            let total = 0;
+    let total = 0;
 
-            paymentDocuments.forEach((doc, index) => {
-                total += doc.isVoided ? 0 : parseInt(doc.amount) || 0;
+    paymentDocuments.forEach((doc, index) => {
+        total += doc.isVoided ? 0 : parseInt(doc.amount) || 0;
 
-                tbody.innerHTML += `
-                    <tr class="${doc.isVoided ? 'voided-row' : ''}">
-                        <td>${doc.row}</td>
-                        <td>${doc.checkDate}</td>
-                        <td>${getAccountName(doc.counterparty)}</td>
-                        <td>${doc.isVoided ? '<s>' : ''}${formatAmount(doc.amount)}${doc.isVoided ? '</s>' : ''}</td>
-                        <td>${doc.status}</td>
-                        <td>${doc.description}</td>
-                        <td>
-                            <button class="button" onclick="editPaymentDocument('${doc.id}')">ویرایش</button>
-                            <button class="button close-btn" onclick="deletePaymentDocument('${doc.id}')">حذف</button>
-                        </td>
-                    </tr>
-                `;
-            });
+        tbody.innerHTML += `
+            <tr class="${doc.isVoided ? 'voided-row' : ''}">
+                <td>${doc.row}</td>
+                <td>${doc.checkDate}</td>
+                <td>${doc.accountNumber}</td> <!-- ستون جدید -->
+                <td>${doc.bank}</td> <!-- ستون جدید -->
+                <td>${getAccountName(doc.counterparty)}</td>
+                <td>${doc.isVoided ? '<s>' : ''}${formatAmount(doc.amount)}${doc.isVoided ? '</s>' : ''}</td>
+                <td>${doc.status}</td>
+                <td>${doc.description}</td>
+                <td>
+                    <button class="button" onclick="editPaymentDocument('${doc.id}')">ویرایش</button>
+                    <button class="button close-btn" onclick="deletePaymentDocument('${doc.id}')">حذف</button>
+                </td>
+            </tr>
+        `;
+    });
 
-            document.getElementById('payment-total-amount').textContent =
-                `جمع مبالغ: ${formatAmount(total)} ریال`;
-        }
+    document.getElementById('payment-total-amount').textContent =
+        `جمع مبالغ: ${formatAmount(total)} ریال`;
+}
 
         function searchPaymentDocuments(query) {
             const filtered = paymentDocuments.filter(doc =>
@@ -972,7 +967,7 @@
         }
 
         function clearPaymentForm() {
-            document.getElementById('payment-row').value = '';
+            document.getElementById('payment-row').value = parseInt(document.getElementById('payment-row').value) + 1;
             document.getElementById('payment-current-date').value = '';
             document.getElementById('payment-check-date').value = '';
             document.getElementById('payment-amount').value = '';
@@ -1015,7 +1010,7 @@
         function saveCashDocument() {
             const doc = {
                 id: Date.now().toString(),
-                row: document.getElementById('cash-row').value,
+                row: parseInt(document.getElementById('cash-row').value),
                 date: document.getElementById('cash-current-date').value,
                 amount: document.getElementById('cash-amount').value,
                 counterparty: document.getElementById('cash-counterparty').value,
@@ -1038,34 +1033,56 @@
             alert('اطلاعات ذخیره شد!');
         }
 
-        function updateCashDocumentsTable() {
-            const tbody = document.getElementById('cash-documents-table-body');
-            tbody.innerHTML = '';
+        
+function calculateCashBalance() {
+    let initialBalance = parseInt(document.getElementById('initial-balance').value) || 0;
+    let totalAmount = 0;
 
-            let total = 0;
-
-            cashDocuments.forEach((doc, index) => {
-                total += doc.isVoided ? 0 : parseInt(doc.amount) || 0;
-
-                tbody.innerHTML += `
-                    <tr class="${doc.isVoided ? 'voided-row' : ''}">
-                        <td>${doc.row}</td>
-                        <td>${doc.date}</td>
-                        <td>${getAccountName(doc.counterparty)}</td>
-                        <td>${doc.isVoided ? '<s>' : ''}${formatAmount(doc.amount)}${doc.isVoided ? '</s>' : ''}</td>
-                        <td>${doc.status}</td>
-                        <td>${doc.description}</td>
-                        <td>
-                            <button class="button" onclick="editCashDocument('${doc.id}')">ویرایش</button>
-                            <button class="button close-btn" onclick="deleteCashDocument('${doc.id}')">حذف</button>
-                        </td>
-                    </tr>
-                `;
-            });
-
-            document.getElementById('cash-total-amount').textContent =
-                `جمع مبالغ: ${formatAmount(total)} ریال`;
+    cashDocuments.forEach(doc => {
+        if (!doc.isVoided) {
+            if (doc.status === 'دریافت') {
+                totalAmount += parseInt(doc.amount) || 0;
+            } else if (doc.status === 'پرداخت') {
+                totalAmount -= parseInt(doc.amount) || 0;
+            }
         }
+    });
+
+    const finalBalance = initialBalance + totalAmount;
+    document.getElementById('cash-balance').textContent = `موجودی صندوق: ${formatAmount(finalBalance)} ریال`;
+}
+
+function updateCashDocumentsTable() {
+    const tbody = document.getElementById('cash-documents-table-body');
+    tbody.innerHTML = '';
+
+    let total = 0;
+
+    cashDocuments.forEach((doc, index) => {
+        total += doc.isVoided ? 0 : parseInt(doc.amount) || 0;
+
+        tbody.innerHTML += `
+            <tr class="${doc.isVoided ? 'voided-row' : ''}">
+                <td>${doc.row}</td>
+                <td>${doc.date}</td>
+                <td>${getAccountName(doc.counterparty)}</td>
+                <td>${doc.isVoided ? '<s>' : ''}${formatAmount(doc.amount)}${doc.isVoided ? '</s>' : ''}</td>
+                <td>${doc.status}</td>
+                <td>${doc.description}</td>
+                <td>
+                    <button class="button" onclick="editCashDocument('${doc.id}')">ویرایش</button>
+                    <button class="button close-btn" onclick="deleteCashDocument('${doc.id}')">حذف</button>
+                </td>
+            </tr>
+        `;
+    });
+
+    document.getElementById('cash-total-amount').textContent =
+        `جمع مبالغ: ${formatAmount(total)} ریال`;
+
+    calculateCashBalance(); // فراخوانی تابع جدید
+}
+
 
         function searchCashDocuments(query) {
             const filtered = cashDocuments.filter(doc =>
@@ -1091,7 +1108,7 @@
                 `).join('');
         }
 
-        function showCashDocumentsForm() {
+          function showCashDocumentsForm() {
             hideAllSections();
             document.getElementById('cash').style.display = 'block';
         }
@@ -1103,7 +1120,7 @@
         }
 
         function clearCashForm() {
-            document.getElementById('cash-row').value = '';
+            document.getElementById('cash-row').value = parseInt(document.getElementById('cash-row').value) + 1;
             document.getElementById('cash-current-date').value = '';
             document.getElementById('cash-amount').value = '';
             document.getElementById('cash-counterparty').value = '';
@@ -1188,7 +1205,7 @@
           // تنظیم تاریخ روز به صورت خودکار
 
     $(document).ready(function () {
-        $(".datepicker").each(function () {  
+        $(".datepicker").each(function () {
             var today = new persianDate().format('YYYY/MM/DD'); // دریافت تاریخ امروز
 
             $(this).val(today);  // مقداردهی خودکار فیلد
