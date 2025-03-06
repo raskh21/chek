@@ -9,6 +9,16 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
     <script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Chek">
+<link rel="apple-touch-icon" href="icons/icon-192x192.png">
+<meta name="msapplication-config" content="none">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192x192.png">
+<link rel="manifest" href="manifest.json">
+
     <style>
         * {
             font-family: 'Vazirmatn', sans-serif;
@@ -552,6 +562,18 @@
         let cashDocuments = JSON.parse(localStorage.getItem('cashDocuments')) || [];
         let currentEditId = null;
 
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/chek/service-worker.js')
+        .then((registration) => {
+          console.log('ServiceWorker registered successfully:', registration.scope);
+        })
+        .catch((error) => {
+          console.log('ServiceWorker registration failed:', error);
+        });
+    });
+  }
         function showMenuSection(sectionId) {
             document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.content > *').forEach(section => section.style.display = 'none');
